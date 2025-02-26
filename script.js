@@ -9,7 +9,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isLooping = !isLooping;
         loopButton.classList.toggle('text-red-500', isLooping);
     });
-    const reqSongButton = document.querySelector(".reqSong");
 
     const title = document.querySelector(".title");
     const playPauseButton = document.getElementById('play-pause');
@@ -30,167 +29,85 @@ document.addEventListener('DOMContentLoaded', () => {
     const slider = document.querySelector('.volume-slider');
     const musicplayer = document.getElementsByClassName('musicplayer')[0];
     const mainContainer = document.getElementsByTagName("main")[0];
-
+    const singerBefore = document.getElementById("singer-before");
+    const singer = document.getElementsByClassName("singer")[0];
+    const singerSelect = document.getElementById('singer'); // Add this line to select the singer dropdown
     musicplayer.style.animationPlayState = 'paused';
     let currentPlaybackRate = parseFloat(speedSelect.value); // Store the current playback speed
     const playlistButton = document.querySelector(".yourPlaylist");
 
- 
- 
 
-    
-
- 
- 
-
-    const iframeContainer = document.createElement("div");
-    iframeContainer.style.position = "fixed";
-    iframeContainer.style.top = "50%";
-    iframeContainer.style.left = "50%";
-    iframeContainer.style.transform = "translate(-50%, -50%)";
-    iframeContainer.style.width = "90%";
-    iframeContainer.style.maxWidth = "774px";
-    iframeContainer.style.width = "90%";
-    iframeContainer.style.height = "82vh";
-    iframeContainer.style.background = "rgb(17 24 39 / 85%)";
-    iframeContainer.style.display = "none";
-    iframeContainer.style.zIndex = "1000";
-    iframeContainer.style.padding = "10px";
-    iframeContainer.style.borderRadius = "9px";
-    iframeContainer.style.borderRadius = "9px";
-    iframeContainer.style.border = "2px solid rgb(41, 236, 254)";
-    iframeContainer.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-
-    const iframe = document.createElement("iframe");
-    iframe.src = "https://docs.google.com/forms/d/e/1FAIpQLSd8Fdms4rUhOCXAgrq9XJdCNeJHg8EX3SS9F6I1PeTM7shh8A/viewform?embedded=true";
-    iframe.width = "100%";
-    iframe.height = "100%";
-    iframe.style.border = "none";
-    iframeContainer.appendChild(iframe);
-
-    // Close button
-    const closeButton = document.createElement("button");
-    closeButton.innerText = "X";
-    closeButton.style.fontSize = "27px";
-closeButton.style.position = "absolute";
-closeButton.style.top = "10px";
-closeButton.style.right = "10px";
-closeButton.style.background = "rgb(194, 0, 0)";
-closeButton.style.fontWeight = "600";
-closeButton.style.color = "white";
-closeButton.style.border = "none";
-closeButton.style.padding = "1px 11px";
-closeButton.style.cursor = "pointer";
-closeButton.style.borderRadius = "8px";
-closeButton.style.margin = "-6px";
-
-    closeButton.addEventListener("click", () => {
-        iframeContainer.style.display = "none";
-    });
-    iframeContainer.appendChild(closeButton);
-
-    document.body.appendChild(iframeContainer);
-
-    reqSongButton.addEventListener("click", () => {
-        iframeContainer.style.display = "block";
-    });
-
-// Random song function
     document.querySelector('.randomSong').addEventListener('click', () => {
         // Sare songs collect karo
         const songs = document.querySelectorAll('.item');
-    
+
         // Random song select karo
         const randomIndex = Math.floor(Math.random() * songs.length);
         const randomSong = songs[randomIndex];
-    
+
         // Pehle ke highlighted songs ka highlight hatayein (agar koi hai toh)
         songs.forEach(song => {
             song.children[0].children[1].children[0].style.color = '';
             song.children[0].children[1].children[1].style.color = '';
             song.classList.remove('bg-gray-900');
         });
-    
+
         // Highlight aur scroll karne ka function call karo
         highlightElement(randomSong);
-    
+
         // Random song ka naam console me show karo
         const songTitle = randomSong.querySelector('.song-title').textContent;
         // console.log(`Randomly selected song: ${songTitle}`);
     });
-    
+
     document.querySelector('.randomSong').addEventListener('click', function () {
         // Generate a random number between 1 and 6
         const randomNumber = Math.floor(Math.random() * 6) + 1;
-    
+
         // Change the dice icon based on the random number
         const diceIcon = this.querySelector('i');
         diceIcon.className = `bx bxs-dice-${randomNumber}`;
-    
+
         // Optionally, you can add a small animation to make it look more interactive
         this.classList.add('rolling');
         setTimeout(() => this.classList.remove('rolling'), 200);
-      });
+    });
 
 
-
-function trimAndDecodeURL(url) {
-    const baseURL = 'https://itsnjedits.github.io/holi/';
-    if (url.startsWith(baseURL)) {
-        // Trim the base URL
-        let trimmedURL = url.slice(baseURL.length);
-        // Decode %20 to spaces
-        return decodeURIComponent(trimmedURL);
-    } else {
-        console.error('URL does not start with the expected base URL.');
-        return url;
-    }
-}
-
-function modifyAndDecodeURL(url) {
-    const baseURL = 'https://itsnjedits.github.io/musicplayer/Thumbnails';
-    const newBaseURL = 'Audio';
-    const oldExtension = '_thumbnail.jpg';
-    const newExtension = '.mp3';
-
-    // Check if the URL starts with the base URL
-    if (url.startsWith(baseURL)) {
-        // Replace the base URL with the new base URL
-        let modifiedURL = url.replace(baseURL, newBaseURL);
-        
-        // Replace '_thumbnail.jpg' with '.mp3'
-        if (modifiedURL.endsWith(oldExtension)) {
-            modifiedURL = modifiedURL.slice(0, -oldExtension.length) + newExtension;
+    function trimAndDecodeURL(url) {
+        const baseURL = 'https://itsnjedits.github.io/holi/';
+        if (url.startsWith(baseURL)) {
+            // Trim the base URL
+            let trimmedURL = url.slice(baseURL.length);
+            // Decode %20 to spaces
+            return decodeURIComponent(trimmedURL);
+        } else {
+            console.error('URL does not start with the expected base URL.');
+            return url;
         }
-
-        // Decode the URL and replace '%20' with spaces
-        return decodeURIComponent(modifiedURL);
-    } else {
-        console.error('URL does not start with the expected base URL.');
-        return url;
     }
-}
-// Function to remove an item from the playlist and update the UI
-function removeFromPlaylist(index) {
-    // Remove the item from the playlist array
-    playlist.splice(index, 1);
 
-    // Update the songs array to reflect changes
-    songs = playlist.filter((song, idx, self) => 
-        idx === self.findIndex((s) => s.image === song.image)
-    );
+    // Function to remove an item from the playlist and update the UI
+    function removeFromPlaylist(index) {
+        // Remove the item from the playlist array
+        playlist.splice(index, 1);
 
-    // Clear the current playlist display
-    const arrayDiv = document.querySelector('.array');
-    arrayDiv.innerHTML = '';
+        // Update the songs array to reflect changes
+        songs = playlist.filter((song, idx, self) =>
+            idx === self.findIndex((s) => s.image === song.image)
+        );
 
-    // Re-render the playlist after removal
-    songs.forEach((song, newIndex) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item flex justify-between items-center bg-gray-700 rounded-xl p-2 max-md:p-1 mx-4 max-md:mx-2 min-md:hover:bg-gray-600 duration-300 cursor-pointer';
-        itemDiv.dataset.index = newIndex;
-        itemDiv.innerHTML = 
-            `<div class="text-white flex items-center gap-x-4 max-md:gap-x-2">
+        // Clear the current playlist display
+        const arrayDiv = document.querySelector('.array');
+        arrayDiv.innerHTML = '';
+
+        // Re-render the playlist after removal
+        songs.forEach((song, newIndex) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item flex justify-between items-center bg-gray-700 rounded-xl p-2 max-md:p-1 mx-4 max-md:mx-2 min-md:hover:bg-gray-600 duration-300 cursor-pointer';
+            itemDiv.dataset.index = newIndex;
+            itemDiv.innerHTML =
+                `<div class="text-white flex items-center gap-x-4 max-md:gap-x-2">
                 <img src="${song.image}" class="max-md:max-md:h-12 max-md:w-20 w-36 h-20 object-cover rounded-lg object-top" alt="${song.title}">
                 <div class="text">
                     <h2 class="max-md:text-base song-title font-semibold text-xl max-[500px]:text-[13.5px]">${song.title}</h2>
@@ -208,39 +125,39 @@ function removeFromPlaylist(index) {
                 <p class="text-5xl remove-from-playlist  text-[#2b8bff] cursor-pointer hover:text-[#29ecfe] max-md:text-2xl "><i class='bx bx-minus'></i></p>
                 
             </div>`;
-        
-        // Remove button ka event listener
-        itemDiv.querySelector('.remove-from-playlist').addEventListener('click', (e) => {
-            e.stopPropagation(); // Ye ensure karega ki parent click event trigger na ho
-            removeFromPlaylist(newIndex);
+
+            // Remove button ka event listener
+            itemDiv.querySelector('.remove-from-playlist').addEventListener('click', (e) => {
+                e.stopPropagation(); // Ye ensure karega ki parent click event trigger na ho
+                removeFromPlaylist(newIndex);
+            });
+
+            // Poore itemDiv pe click karne par song play hoga
+            itemDiv.addEventListener('click', () => {
+                playSong(newIndex);
+            });
+
+            arrayDiv.appendChild(itemDiv);
         });
+    }
 
-        // Poore itemDiv pe click karne par song play hoga
-        itemDiv.addEventListener('click', () => {
-            playSong(newIndex);
-        });
+    // Event listener for the playlist button
 
-        arrayDiv.appendChild(itemDiv);
-    });
-}
+    playlistButton.addEventListener('click', () => {
+        const arrayDiv = document.querySelector('.array');
+        arrayDiv.innerHTML = '';
 
-// Event listener for the playlist button
+        songs = playlist.filter((song, index, self) =>
+            index === self.findIndex((s) => s.image === song.image)
+        );
 
-playlistButton.addEventListener('click', () => {
-    const arrayDiv = document.querySelector('.array');
-    arrayDiv.innerHTML = '';
-
-    songs = playlist.filter((song, index, self) => 
-        index === self.findIndex((s) => s.image === song.image)
-    );
-
-    // Loop through filtered songs and render them
-    songs.forEach((song, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item flex justify-between items-center bg-gray-700 rounded-xl p-2 max-md:p-1 mx-4 max-md:mx-2 min-md:hover:bg-gray-600 duration-300 cursor-pointer';
-        itemDiv.dataset.index = index;
-        itemDiv.innerHTML = 
-            `<div class="text-white flex items-center gap-x-4 max-md:gap-x-2">
+        // Loop through filtered songs and render them
+        songs.forEach((song, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item flex justify-between items-center bg-gray-700 rounded-xl p-2 max-md:p-1 mx-4 max-md:mx-2 min-md:hover:bg-gray-600 duration-300 cursor-pointer';
+            itemDiv.dataset.index = index;
+            itemDiv.innerHTML =
+                `<div class="text-white flex items-center gap-x-4 max-md:gap-x-2">
                 <img src="${song.image}" class="max-md:max-md:h-12 max-md:w-20 w-36 h-20 object-cover rounded-lg object-top" alt="${song.title}">
                 <div class="text">
                     <h2 class="max-md:text-base song-title font-semibold text-xl max-[500px]:text-[13.5px]">${song.title}</h2>
@@ -259,31 +176,37 @@ playlistButton.addEventListener('click', () => {
                 
             </div>`;
 
-        // Remove button ka event listener
-        itemDiv.querySelector('.remove-from-playlist').addEventListener('click', (e) => {
-            e.stopPropagation(); // Ye ensure karega ki parent click event trigger na ho
-            removeFromPlaylist(index);
-        });
+            // Remove button ka event listener
+            itemDiv.querySelector('.remove-from-playlist').addEventListener('click', (e) => {
+                e.stopPropagation(); // Ye ensure karega ki parent click event trigger na ho
+                removeFromPlaylist(index);
+            });
 
-        // Poore itemDiv pe click karne par song play hoga
-        itemDiv.addEventListener('click', () => {
-            playSong(index);
-        });
+            // Poore itemDiv pe click karne par song play hoga
+            itemDiv.addEventListener('click', () => {
+                playSong(index);
+            });
 
-        arrayDiv.appendChild(itemDiv);
+            arrayDiv.appendChild(itemDiv);
+        });
     });
-});
 
-function loadSongList() {
-    const arrayDiv = document.querySelector('.array');
-    arrayDiv.innerHTML = '';
+    function extractDataFromURL(url) {
+        // "Thumbnails/" ke baad ka data extract karo
+        let extracted = url.replace(/.*?Thumbnails\//, "").replace(/_thumbnail.*$/, "");
+        return (extracted);
+    }
 
-    songs.forEach((song, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'item flex justify-between items-center bg-gray-700 rounded-xl p-2 max-md:p-1 mx-4 max-md:mx-2 min-md:hover:bg-gray-600 duration-300 cursor-pointer';
-        itemDiv.dataset.index = index;
-        itemDiv.innerHTML = 
-            `<div class="text-white flex items-center gap-x-4 max-md:gap-x-2">
+    function loadSongList() {
+        const arrayDiv = document.querySelector('.array');
+        arrayDiv.innerHTML = '';
+
+        songs.forEach((song, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'item flex justify-between items-center bg-gray-700 rounded-xl p-2 max-md:p-1 mx-4 max-md:mx-2 min-md:hover:bg-gray-600 duration-300 cursor-pointer';
+            itemDiv.dataset.index = index;
+            itemDiv.innerHTML =
+                `<div class="text-white flex items-center gap-x-4 max-md:gap-x-2">
                 <img src="${song.image}" class="max-md:max-md:h-12 max-md:w-20 w-36 h-20 object-cover rounded-lg object-top" alt="${song.title}">
                 <div class="text">
                     <h2 class="max-md:text-base song-title font-semibold text-xl max-[500px]:text-[13.5px]">${song.title}</h2>
@@ -301,55 +224,61 @@ function loadSongList() {
                 <p class="text-5xl add-to-playlist  text-[#2b8bff] cursor-pointer hover:text-[#29ecfe] max-md:text-2xl "><i class='bx bx-plus'></i></p>
                 
             </div>`
-        ;
+                ;
 
-        itemDiv.addEventListener('click', (event) => {
-            const addToPlaylistButton = event.target.closest('.add-to-playlist');
-            if (addToPlaylistButton) {
-                event.stopPropagation();
+            itemDiv.addEventListener('click', (event) => {
+                const addToPlaylistButton = event.target.closest('.add-to-playlist');
+                if (addToPlaylistButton) {
+                    event.stopPropagation();
 
-                const imageURL = trimAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
-                const title = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[0].textContent;
-                const artist = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[1].textContent;
-                let fileURL;
-                fileURL = modifyAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
+                    const imageURL = trimAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
+                    const imageURL2 = extractDataFromURL(imageURL);
+                    const title = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[0].textContent;
+                    const artist = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[1].textContent;
+                    let fileURL;
 
-                const songData = {
-                    image: imageURL,
-                    file: fileURL,
-                    title: title,
-                    artist: artist
-                };
+                    console.log("#####---->>>", imageURL);
+                    console.log("#####---->>>", addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
 
-                playlist.push(songData);
-                console.log(JSON.stringify(playlist, null, 2));
-                return;
-            }
-            playSong(index);
+                    fileURL = `Audio/${imageURL2}.mp3`;
+
+                    const songData = {
+                        image: imageURL,
+                        file: fileURL,
+                        title: title,
+                        artist: artist
+                    };
+
+                    playlist.push(songData);
+                    console.log(JSON.stringify(playlist, null, 2));
+                    return;
+                }
+                playSong(index);
+            });
+
+            arrayDiv.appendChild(itemDiv);
         });
+    }
 
-        arrayDiv.appendChild(itemDiv);
-    });
-}
 
-function fetching(filename){
-    fetch(`${filename}`)
+    function fetching(filename) {
+        fetch(`${filename}`)
             .then(response => response.json())
             .then(data => {
                 songs = data.sort((a, b) => a.title.localeCompare(b.title)); // Sort songs alphabetically
                 loadSongList();
             })
             .catch(error => console.error('Error fetching songs:', error));
-}
-    title.addEventListener('click',()=>{
+    }
+    title.addEventListener('click', () => {
         fetching('holi.json')
-            
-            document.querySelector('.without-ads').innerHTML = `Non-Stop 350+ Songs - No Ads 🔥`
-        })
-        
-    playlistButton.addEventListener('click',()=>{
-        document.querySelector('.without-ads').innerHTML = `Your Instant Playlist 🔥`
-        
+
+        document.querySelector('.without-ads').innerHTML = `Non-Stop Holi Songs - No Ads 🌈`
+    })
+
+    playlistButton.addEventListener('click', () => {
+        document.querySelector('.without-ads').innerHTML = `Instant Holi Playlist 🌈`
+
     })
 
     function disableAllButtons() {
@@ -378,90 +307,94 @@ function fetching(filename){
         rewind.classList.add('min-md:hover:bg-gray-500');
     }
 
-    disableAllButtons();        
+    disableAllButtons();
+
+
 
     fetch('holi.json')
-            .then(response => response.json())
-            .then(data => {
-                songs = data.sort((a, b) => a.title.localeCompare(b.title)); // Sort songs alphabetically
-                loadSongList();
-            })
-            .catch(error => console.error('Error fetching songs:', error));
+        .then(response => response.json())
+        .then(data => {
+            songs = data.sort((a, b) => a.title.localeCompare(b.title)); // Sort songs alphabetically
             loadSongList();
-   
-            function playSong(index) {
-                mainContainer.classList.remove("mb-28");
-                mainContainer.classList.remove("max-md:mb-20");
-                if (window.innerWidth < 768) {
-                    mainContainer.classList.add("mb-32");
-                    mainContainer.classList.remove("mb-56");
-                } else {
-                    mainContainer.classList.add("mb-56");
-                    mainContainer.classList.remove("mb-32");
-                }
-            
-                // Handle invalid index
-                if (index < 0) return;
-            
-                if (index >= songs.length) {
-                    if (isLooping) {
-                        index = 0; // Restart from first song
-                    } else {
-                        return; // Stop playback on last song
-                    }
-                }
-            
-                currentIndex = index;
-                const song = songs[currentIndex];
-            
-                // Stop current playback only if audio is playing
-                if (!audio.paused) {
-                    audio.pause();
-                }
-            
-                // Ensure previous event listeners are removed to prevent duplicate calls
-                audio.onended = null;
-            // Load new song
-audio.src = `https://itsnjedits.github.io/musicplayer/${song.file}`;
-console.log(audio.src);
-audio.load(); // Ensure the new song is loaded properly
-            
-                audio.playbackRate = currentPlaybackRate;
-            
-                audio.play().then(() => {
-                    musicplayer.style.animationPlayState = 'running';
-                }).catch(error => console.error("Playback error:", error));
-            
-                updatePlayer(song);
-                enableAllButtons();
-            
-                // Fix song skipping issue
-                audio.onended = () => {
-                    if (currentIndex === songs.length - 1 && !isLooping) {
-                        return; // Stop playback at last song if looping is off
-                    }
-                    playSong(currentIndex + 1); // Play next song
-                };
-            }
-            
+        })
+        .catch(error => console.error('Error fetching songs:', error));
+    loadSongList();
 
 
-            function updatePlayer(song) {
-                songImage.src = song.image;
-                songImage.style.objectFit = "cover";
-                songImage.style.objectPosition = "top";
-                
-                songTitle.textContent = song.title;
-                songArtist.textContent = song.artist;
-                songDescription.classList.remove('opacity-0'); // Show the song description
-                songDescription.style.display = 'flex'; // Show the music player
-                playPauseButton.innerHTML = `<i class='bx bx-pause' ></i>`;
-                updateButtons();
-                updateTime();
-                updateVisualizers(); // Update visualizers
-                highlightCurrentSong(); // Highlight the current song
+    function playSong(index) {
+        mainContainer.classList.remove("mb-28");
+        mainContainer.classList.remove("max-md:mb-20");
+        if (window.innerWidth < 768) {
+            mainContainer.classList.add("mb-32");
+            mainContainer.classList.remove("mb-56");
+        } else {
+            mainContainer.classList.add("mb-56");
+            mainContainer.classList.remove("mb-32");
+        }
+
+        // Handle invalid index
+        if (index < 0) return;
+
+        if (index >= songs.length) {
+            if (isLooping) {
+                index = 0; // Restart from first song
+            } else {
+                return; // Stop playback on last song
             }
-            
+        }
+
+        currentIndex = index;
+        const song = songs[currentIndex];
+
+        // Stop current playback only if audio is playing
+        if (!audio.paused) {
+            audio.pause();
+        }
+
+        // Ensure previous event listeners are removed to prevent duplicate calls
+        audio.onended = null;
+
+
+        // Load new song
+        audio.src = `https://itsnjedits.github.io/musicplayer/${song.file}`;
+        console.log(audio.src);
+        audio.load(); // Ensure the new song is loaded properly
+        audio.playbackRate = currentPlaybackRate;
+
+        audio.play().then(() => {
+            musicplayer.style.animationPlayState = 'running';
+        }).catch(error => console.error("Playback error:", error));
+
+        updatePlayer(song);
+        enableAllButtons();
+
+        // Fix song skipping issue
+        audio.onended = () => {
+            if (currentIndex === songs.length - 1 && !isLooping) {
+                return; // Stop playback at last song if looping is off
+            }
+            playSong(currentIndex + 1); // Play next song
+        };
+    }
+
+
+
+    function updatePlayer(song) {
+        songImage.src = song.image;
+        songImage.style.objectFit = "cover";
+        songImage.style.objectPosition = "top";
+
+        songTitle.textContent = song.title;
+        songArtist.textContent = song.artist;
+        songDescription.classList.remove('opacity-0'); // Show the song description
+        songDescription.style.display = 'flex'; // Show the music player
+        playPauseButton.innerHTML = `<i class='bx bx-pause' ></i>`;
+        updateButtons();
+        updateTime();
+        updateVisualizers(); // Update visualizers
+        highlightCurrentSong(); // Highlight the current song
+    }
+
 
     function updateButtons() {
         prevButton.disabled = currentIndex === 0;
@@ -530,16 +463,16 @@ audio.load(); // Ensure the new song is loaded properly
         items.forEach(item => {
             const songTitleElement = item.querySelector('.song-title');
             const songTitleElement2 = item.querySelector('.song-artist');
-            item.classList.remove('bg-gray-700','bg-gray-600'); // Add border class
+            item.classList.remove('bg-gray-700', 'bg-gray-600'); // Add border class
 
             if (songTitleElement.textContent === songTitle.textContent && songTitleElement2.textContent === songArtist.textContent) {
-                item.classList.add('border-[1px]', 'border-[#29ecfe]','bg-gray-600'); // Add border class
+                item.classList.add('border-[1px]', 'border-[#29ecfe]', 'bg-gray-600'); // Add border class
             } else {
                 item.classList.remove('border-[1px]', 'border-[#29ecfe]'); // Remove border class
             }
         });
     }
-    
+
 
     playPauseButton.addEventListener('click', () => {
         if (audio.paused) {
@@ -566,25 +499,25 @@ audio.load(); // Ensure the new song is loaded properly
 
 
     // Keyboard shortcuts
-  document.addEventListener('keydown', (event) => {
-  const isInput = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
-  const actions = {
-    KeyN: () => nextButton.click(),
-    KeyP: () => prevButton.click(),
-    KeyM: () => {
-      audio.volume = audio.volume ? 0 : 0.6;
-      slider.value = audio.volume * 100;
-    },
-    ArrowRight: () => changeTime(10),
-    ArrowLeft: () => changeTime(-10),
-    Space: () => playPauseButton.click()
-  };
+    document.addEventListener('keydown', (event) => {
+        const isInput = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
+        const actions = {
+            KeyN: () => nextButton.click(),
+            KeyP: () => prevButton.click(),
+            KeyM: () => {
+                audio.volume = audio.volume ? 0 : 0.6;
+                slider.value = audio.volume * 100;
+            },
+            ArrowRight: () => changeTime(10),
+            ArrowLeft: () => changeTime(-10),
+            Space: () => playPauseButton.click()
+        };
 
-  if (!isInput && actions[event.code]) {
-    event.preventDefault();
-    actions[event.code]();
-  }
-});
+        if (!isInput && actions[event.code]) {
+            event.preventDefault();
+            actions[event.code]();
+        }
+    });
 
 
     // Auto-next feature
@@ -593,39 +526,39 @@ audio.load(); // Ensure the new song is loaded properly
     // Searching Songs
     const searchInput = document.getElementById('search-input');
     const searchNextBtn = document.getElementById('search-next-btn');
-    
+
     searchInput.addEventListener('input', () => searchWebsite(false));
     searchNextBtn.addEventListener('click', () => searchWebsite(true));
-    
+
     let searchResultIndex = -1;
-    
+
     function searchWebsite(findNext) {
-      const searchTerm = searchInput.value.trim().toLowerCase();
-      const elements = document.querySelectorAll('.item');
-    
-      elements.forEach(el => {
-        el.children[0].children[1].children[0].style.color = '';
-        el.children[0].children[1].children[1].style.color = '';
-        el.classList.remove('bg-gray-900');
-      });
-    
-      if (searchTerm) {
-        for (let i = findNext ? searchResultIndex + 1 : 0; i < elements.length; i++) {
-          if (elements[i].textContent.toLowerCase().includes(searchTerm)) {
-            searchResultIndex = i;
-            highlightElement(elements[i]);
-            break;
-          }
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const elements = document.querySelectorAll('.item');
+
+        elements.forEach(el => {
+            el.children[0].children[1].children[0].style.color = '';
+            el.children[0].children[1].children[1].style.color = '';
+            el.classList.remove('bg-gray-900');
+        });
+
+        if (searchTerm) {
+            for (let i = findNext ? searchResultIndex + 1 : 0; i < elements.length; i++) {
+                if (elements[i].textContent.toLowerCase().includes(searchTerm)) {
+                    searchResultIndex = i;
+                    highlightElement(elements[i]);
+                    break;
+                }
+            }
         }
-      }
     }
-    
+
     function highlightElement(el) {
-      el.children[0].children[1].children[0].style.color = 'yellow';
-      el.children[0].children[1].children[1].style.color = 'yellow';
-      el.classList.add('bg-gray-900');
-    
-      const yOffset = el.offsetTop + (el.offsetHeight / 2) - (window.innerHeight / 2);
-      window.scrollTo({ top: yOffset, behavior: 'smooth' });
+        el.children[0].children[1].children[0].style.color = 'yellow';
+        el.children[0].children[1].children[1].style.color = 'yellow';
+        el.classList.add('bg-gray-900');
+
+        const yOffset = el.offsetTop + (el.offsetHeight / 2) - (window.innerHeight / 2);
+        window.scrollTo({ top: yOffset, behavior: 'smooth' });
     }
-    });
+});
