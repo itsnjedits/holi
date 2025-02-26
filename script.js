@@ -309,16 +309,15 @@ function loadSongList() {
                 event.stopPropagation();
 
                 const imageURL = trimAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
-                console.log(imageURL);
-                const baseURL = "https://itsnjedits.github.io/musicplayer/";
-                const imageURL2 = `${baseURL}${imageURL}`;
+
                 const title = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[0].textContent;
                 const artist = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[1].textContent;
+
                 fileURL = modifyAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
-                const fileURL2 = `${baseURL}${imageURL}`;
+
                 const songData = {
-                    image: imageURL2,
-                    file: fileURL2,
+                    image: imageURL,
+                    file: fileURL,
                     title: title,
                     artist: artist
                 };
