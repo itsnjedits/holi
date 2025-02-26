@@ -309,14 +309,14 @@ function loadSongList() {
                 event.stopPropagation();
 
                 const imageURL = trimAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
-                console.log("Image url :", imageURL);
+                // console.log("Image url :", imageURL);
                 const title = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[0].textContent;
                 const artist = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[1].textContent;
 
-                // fileURL = modifyAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
-
-                let fileURL;
-                fileURL = `https://itsnjedits.github.io/musicplayer/Audio/${imageURL}.mp3`;
+                fileURL = modifyAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
+                // console.log(fileURL)
+                // let fileURL;
+                // fileURL = `https://itsnjedits.github.io/musicplayer/Audio/${imageURL}.mp3`;
 
 
                 const songData = {
