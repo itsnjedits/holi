@@ -273,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     title.addEventListener('click', () => {
         fetching('holi.json')
 
-        document.querySelector('.without-ads').innerHTML = `Non-Stop Holi Songs - No Ads 🌈`
+        document.querySelector('.without-ads').innerHTML = `No ads ❌ only Holi vibes! 🔥✅`
     })
 
     playlistButton.addEventListener('click', () => {
