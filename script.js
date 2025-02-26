@@ -135,7 +135,7 @@ closeButton.style.margin = "-6px";
 
 
 function trimAndDecodeURL(url) {
-    const baseURL = 'https://itsnjedits.github.io/musicplayer/';
+    const baseURL = 'https://itsnjedits.github.io/holi/';
     if (url.startsWith(baseURL)) {
         // Trim the base URL
         let trimmedURL = url.slice(baseURL.length);
@@ -309,11 +309,15 @@ function loadSongList() {
                 event.stopPropagation();
 
                 const imageURL = trimAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
-
+                console.log("Image url :", imageURL);
                 const title = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[0].textContent;
                 const artist = addToPlaylistButton.parentElement.parentElement.children[0].children[1].children[1].textContent;
 
-                fileURL = modifyAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
+                // fileURL = modifyAndDecodeURL(addToPlaylistButton.parentElement.parentElement.children[0].children[0].src);
+
+                let fileURL;
+                fileURL = `https://itsnjedits.github.io/musicplayer/Audio/${imageURL}.mp3`;
+
 
                 const songData = {
                     image: imageURL,
